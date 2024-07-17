@@ -86,8 +86,8 @@ class _ProcessingPageState extends State<ProcessingPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Offstage(
-          offstage: state.isLoadingTasks,
+        Visibility.maintain(
+          visible: !state.isLoadingTasks,
           child: Text("All calculations has finished. You can send your results to server.".hardcoded,
             textAlign: TextAlign.center, 
           ),
@@ -100,14 +100,12 @@ class _ProcessingPageState extends State<ProcessingPage> {
   }
 
   Widget? buildSendButton(BuildContext context, ProcessingPageState state) {
-    return Opacity(
-      opacity: state.isLoadingTasks
-        ? 0
-        : 1,
+    return Visibility.maintain(
+      visible: !state.isLoadingTasks,
       child: Padding(
         padding: const EdgeInsets.all(p16),
         child: FilledButton(
-          onPressed: state.isCheckingTasks
+          onPressed: state.isLoadingTasks || state.isCheckingTasks
             ? null
             : () => onSubmitCalculations(context),
           child: Text("Send results to server".hardcoded),

@@ -19,8 +19,10 @@ class ErrorMessageDialog extends StatelessWidget with DialogWidget<void> {
   Widget build(BuildContext context) {
     return Dialog(
       child: Padding(
-        padding: const EdgeInsets.all(p24),
+        padding: const EdgeInsets.all(p16),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ListTile(
               leading: Icon(Icons.error_outline, 
