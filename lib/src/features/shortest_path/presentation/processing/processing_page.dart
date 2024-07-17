@@ -38,7 +38,8 @@ class _ProcessingPageState extends State<ProcessingPage> {
   }
 
   void onRetry(BuildContext context) {
-    // TODO: onRetry
+    final bloc = context.read<ProcessingPageBloc>();
+    bloc.add(ProcessingPageEvent.init());
   }
 
   @override
@@ -74,12 +75,13 @@ class _ProcessingPageState extends State<ProcessingPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(state.errorMessage!),
+            h8gap,
             FilledButton(
               onPressed: () => onRetry(context),
               child: Text("Retry".hardcoded),
             )
           ]
-        )
+        ),
       );
     }
     return Column(
@@ -87,7 +89,7 @@ class _ProcessingPageState extends State<ProcessingPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Visibility.maintain(
-          visible: !state.isLoadingTasks,
+          visible: state.tasksLoaded,
           child: Text("All calculations has finished. You can send your results to server.".hardcoded,
             textAlign: TextAlign.center, 
           ),
@@ -101,13 +103,13 @@ class _ProcessingPageState extends State<ProcessingPage> {
 
   Widget? buildSendButton(BuildContext context, ProcessingPageState state) {
     return Visibility.maintain(
-      visible: !state.isLoadingTasks,
+      visible: state.canSave,
       child: Padding(
         padding: const EdgeInsets.all(p16),
         child: FilledButton(
-          onPressed: state.isLoadingTasks || state.isCheckingTasks
-            ? null
-            : () => onSubmitCalculations(context),
+          onPressed: state.canSave
+            ? () => onSubmitCalculations(context)
+            : null,
           child: Text("Send results to server".hardcoded),
         )
       ),

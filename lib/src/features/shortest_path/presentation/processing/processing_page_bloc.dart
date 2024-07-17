@@ -18,7 +18,7 @@ class ProcessingPageBloc extends Bloc<ProcessingPageEvent, ProcessingPageState> 
   final getShortestPath = inject<GetShortestPathUseCase>();
   final checkResults = inject<CheckResultsUseCase>();
 
-  late final Dio dio;
+  late Dio dio;
 
   ProcessingPageBloc() : super(const ProcessingPageState()) {
     on<ProcessingPageInitEvent>(_init);
@@ -29,7 +29,10 @@ class ProcessingPageBloc extends Bloc<ProcessingPageEvent, ProcessingPageState> 
     ProcessingPageInitEvent event, 
     Emitter<ProcessingPageState> emit
   ) async {
-    emit(state.copyWith(isLoadingTasks: true));
+    emit(state.copyWith(
+      isLoadingTasks: true,
+      errorMessage: null
+    ));
 
     final url = await getUrl();
     dio = Dio(BaseOptions(baseUrl: url!));

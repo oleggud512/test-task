@@ -16,4 +16,8 @@ class ProcessingPageState with _$ProcessingPageState {
     String? errorMessage
   }) = _ProcessingPageState;
 
+  bool get canSave => errorMessage == null && !isLoadingTasks && !isCheckingTasks;
+
+  bool get tasksLoaded => errorMessage == null && !isLoadingTasks;
+
 }

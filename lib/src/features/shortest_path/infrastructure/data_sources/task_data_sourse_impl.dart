@@ -37,12 +37,10 @@ class TaskDataSourseImpl implements TaskDataSource {
           isChecked: true,
           isCorrect: correct
         );
-        print("yes");
       }
       return Right(res);
     } on DioException catch (e, st) {
       glogger.e(e, stackTrace: st);
-      glogger.t(e.response);
       return Left(AppException(e.response?.data[data][message] ?? "No message provided"));
     } catch (e, st) {
       glogger.e(e, stackTrace: st);
@@ -58,7 +56,10 @@ class TaskDataSourseImpl implements TaskDataSource {
       return Right(tasks);
     } on DioException catch (e, st) {
       glogger.e(e, stackTrace: st);
-      return Left(AppException(e.response?.data[message] ?? ""));
+      return Left(AppException(e.response?.data[message] ?? "No responce"));
+    } catch (e, st) {
+      glogger.e(e, stackTrace: st);
+      return Left(AppException(e.toString()));
     }
   }
   
