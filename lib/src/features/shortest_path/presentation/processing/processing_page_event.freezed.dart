@@ -20,7 +20,7 @@ mixin _$ProcessingPageEvent {
   TResult when<TResult extends Object?>(
     TResult Function() $default, {
     required TResult Function() init,
-    required TResult Function(void Function(List<Result>) onSuccess,
+    required TResult Function(void Function(List<Result>, List<Task>) onSuccess,
             void Function(String) onError)
         checkResults,
   }) =>
@@ -29,7 +29,7 @@ mixin _$ProcessingPageEvent {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function()? $default, {
     TResult? Function()? init,
-    TResult? Function(void Function(List<Result>) onSuccess,
+    TResult? Function(void Function(List<Result>, List<Task>) onSuccess,
             void Function(String) onError)?
         checkResults,
   }) =>
@@ -38,7 +38,7 @@ mixin _$ProcessingPageEvent {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function()? $default, {
     TResult Function()? init,
-    TResult Function(void Function(List<Result>) onSuccess,
+    TResult Function(void Function(List<Result>, List<Task>) onSuccess,
             void Function(String) onError)?
         checkResults,
     required TResult orElse(),
@@ -128,7 +128,7 @@ class _$ProcessingPageEventImpl implements _ProcessingPageEvent {
   TResult when<TResult extends Object?>(
     TResult Function() $default, {
     required TResult Function() init,
-    required TResult Function(void Function(List<Result>) onSuccess,
+    required TResult Function(void Function(List<Result>, List<Task>) onSuccess,
             void Function(String) onError)
         checkResults,
   }) {
@@ -140,7 +140,7 @@ class _$ProcessingPageEventImpl implements _ProcessingPageEvent {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function()? $default, {
     TResult? Function()? init,
-    TResult? Function(void Function(List<Result>) onSuccess,
+    TResult? Function(void Function(List<Result>, List<Task>) onSuccess,
             void Function(String) onError)?
         checkResults,
   }) {
@@ -152,7 +152,7 @@ class _$ProcessingPageEventImpl implements _ProcessingPageEvent {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function()? $default, {
     TResult Function()? init,
-    TResult Function(void Function(List<Result>) onSuccess,
+    TResult Function(void Function(List<Result>, List<Task>) onSuccess,
             void Function(String) onError)?
         checkResults,
     required TResult orElse(),
@@ -247,7 +247,7 @@ class _$ProcessingPageInitEventImpl implements ProcessingPageInitEvent {
   TResult when<TResult extends Object?>(
     TResult Function() $default, {
     required TResult Function() init,
-    required TResult Function(void Function(List<Result>) onSuccess,
+    required TResult Function(void Function(List<Result>, List<Task>) onSuccess,
             void Function(String) onError)
         checkResults,
   }) {
@@ -259,7 +259,7 @@ class _$ProcessingPageInitEventImpl implements ProcessingPageInitEvent {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function()? $default, {
     TResult? Function()? init,
-    TResult? Function(void Function(List<Result>) onSuccess,
+    TResult? Function(void Function(List<Result>, List<Task>) onSuccess,
             void Function(String) onError)?
         checkResults,
   }) {
@@ -271,7 +271,7 @@ class _$ProcessingPageInitEventImpl implements ProcessingPageInitEvent {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function()? $default, {
     TResult Function()? init,
-    TResult Function(void Function(List<Result>) onSuccess,
+    TResult Function(void Function(List<Result>, List<Task>) onSuccess,
             void Function(String) onError)?
         checkResults,
     required TResult orElse(),
@@ -330,7 +330,8 @@ abstract class _$$ProcessingPageCheckResultsEventImplCopyWith<$Res> {
       __$$ProcessingPageCheckResultsEventImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {void Function(List<Result>) onSuccess, void Function(String) onError});
+      {void Function(List<Result>, List<Task>) onSuccess,
+      void Function(String) onError});
 }
 
 /// @nodoc
@@ -353,7 +354,7 @@ class __$$ProcessingPageCheckResultsEventImplCopyWithImpl<$Res>
       onSuccess: null == onSuccess
           ? _value.onSuccess
           : onSuccess // ignore: cast_nullable_to_non_nullable
-              as void Function(List<Result>),
+              as void Function(List<Result>, List<Task>),
       onError: null == onError
           ? _value.onError
           : onError // ignore: cast_nullable_to_non_nullable
@@ -370,7 +371,7 @@ class _$ProcessingPageCheckResultsEventImpl
       {required this.onSuccess, required this.onError});
 
   @override
-  final void Function(List<Result>) onSuccess;
+  final void Function(List<Result>, List<Task>) onSuccess;
   @override
   final void Function(String) onError;
 
@@ -405,7 +406,7 @@ class _$ProcessingPageCheckResultsEventImpl
   TResult when<TResult extends Object?>(
     TResult Function() $default, {
     required TResult Function() init,
-    required TResult Function(void Function(List<Result>) onSuccess,
+    required TResult Function(void Function(List<Result>, List<Task>) onSuccess,
             void Function(String) onError)
         checkResults,
   }) {
@@ -417,7 +418,7 @@ class _$ProcessingPageCheckResultsEventImpl
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function()? $default, {
     TResult? Function()? init,
-    TResult? Function(void Function(List<Result>) onSuccess,
+    TResult? Function(void Function(List<Result>, List<Task>) onSuccess,
             void Function(String) onError)?
         checkResults,
   }) {
@@ -429,7 +430,7 @@ class _$ProcessingPageCheckResultsEventImpl
   TResult maybeWhen<TResult extends Object?>(
     TResult Function()? $default, {
     TResult Function()? init,
-    TResult Function(void Function(List<Result>) onSuccess,
+    TResult Function(void Function(List<Result>, List<Task>) onSuccess,
             void Function(String) onError)?
         checkResults,
     required TResult orElse(),
@@ -478,11 +479,11 @@ class _$ProcessingPageCheckResultsEventImpl
 
 abstract class ProcessingPageCheckResultsEvent implements ProcessingPageEvent {
   factory ProcessingPageCheckResultsEvent(
-          {required final void Function(List<Result>) onSuccess,
+          {required final void Function(List<Result>, List<Task>) onSuccess,
           required final void Function(String) onError}) =
       _$ProcessingPageCheckResultsEventImpl;
 
-  void Function(List<Result>) get onSuccess;
+  void Function(List<Result>, List<Task>) get onSuccess;
   void Function(String) get onError;
   @JsonKey(ignore: true)
   _$$ProcessingPageCheckResultsEventImplCopyWith<

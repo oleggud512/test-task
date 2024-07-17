@@ -77,7 +77,7 @@ class ProcessingPageBloc extends Bloc<ProcessingPageEvent, ProcessingPageState> 
           results: right,
           isCheckingTasks: false
         ));
-        event.onSuccess(right);
+        event.onSuccess(right, state.tasks);
       }
     );
   }

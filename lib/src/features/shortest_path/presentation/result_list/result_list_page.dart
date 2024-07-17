@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:test_task/src/core/common/constants/sizes.dart';
 import 'package:test_task/src/core/common/extensions/string.dart';
 import 'package:test_task/src/features/shortest_path/domain/entities/result.dart';
+import 'package:test_task/src/features/shortest_path/domain/entities/task.dart';
 import 'package:test_task/src/features/shortest_path/presentation/preview/preview_page.dart';
 
 class ResultListPage extends StatelessWidget {
   const ResultListPage({
     super.key,
-    required this.results
+    required this.results,
+    required this.tasks,
   });
 
   final List<Result> results;
+  final List<Task> tasks;
 
   void onResult(BuildContext context, Result result) {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-      return PreviewPage(result: result);
+      return PreviewPage(result: result, task: tasks.firstWhere((t) => t.id == result.id));
     }));
   }
 

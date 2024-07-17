@@ -22,9 +22,9 @@ class _ProcessingPageState extends State<ProcessingPage> {
   void onSubmitCalculations(BuildContext context) {
     final bloc = context.read<ProcessingPageBloc>();
     bloc.add(ProcessingPageCheckResultsEvent(
-      onSuccess: (results) {
+      onSuccess: (results, tasks) {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          return ResultListPage(results: results);
+          return ResultListPage(results: results, tasks: tasks);
         }));
       },
       onError: (message) {
