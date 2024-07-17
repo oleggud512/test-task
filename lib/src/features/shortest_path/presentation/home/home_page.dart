@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
     getUrlFuture.then((url) {
       if (url != null) {
         cont.text = url;
+        updateValidationState();
       }
     });
   }
@@ -54,9 +55,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     if (isValid == null) {
-      Future(updateValidationState);
+      Future.delayed(const Duration(milliseconds: 300), updateValidationState);
     }
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text("Home Page".hardcoded),
       ),
@@ -77,19 +79,17 @@ class _HomePageState extends State<HomePage> {
                 },
                 autovalidateMode: AutovalidateMode.always,
                 onChanged: (_) => updateValidationState()
+              ),
+              const Spacer(),
+              FilledButton(
+                onPressed: isValid == true
+                  ? onStart 
+                  : null, 
+                child: Text("Start counting process".hardcoded)
               )
             ]
           ),
         ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(p16),
-        child: FilledButton(
-          onPressed: isValid == true
-            ? onStart 
-            : null, 
-          child: Text("Start counting process".hardcoded)
-        )
       ),
     );
   }
