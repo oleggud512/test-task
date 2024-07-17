@@ -34,14 +34,8 @@ class ProcessingPageBloc extends Bloc<ProcessingPageEvent, ProcessingPageState> 
     final url = await getUrl();
     dio = Dio(BaseOptions(baseUrl: url!));
     final tasks = await getTasks(dio);
-    glogger.i(url);
-    final results = tasks.map((right) {
-      return right.map((task) => Result(
-        id: task.id,
-        steps: getShortestPath(task.start, task.end, task.field)
-      )).toList();
-    });
-    results.fold(
+
+    tasks.fold(
       (left) {
         emit(state.copyWith(
           errorMessage: left.message,
@@ -50,7 +44,11 @@ class ProcessingPageBloc extends Bloc<ProcessingPageEvent, ProcessingPageState> 
       },
       (right) {
         emit(state.copyWith(
-          results: right,
+          tasks: right,
+          results: right.map((task) => Result(
+            id: task.id,
+            steps: getShortestPath(task.start, task.end, task.field)
+          )).toList(),
           isLoadingTasks: false
         ));
       }
