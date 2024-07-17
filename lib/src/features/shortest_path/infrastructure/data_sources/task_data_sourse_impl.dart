@@ -22,15 +22,12 @@ class TaskDataSourseImpl implements TaskDataSource {
       );
 
       final res = [...results];
-      glogger.t(response);
 
-      for (final resData in response.data[data]!) {
-        // final { 
-        //   "id": String id, 
-        //   "correct": bool correct 
-        // } = resData;
-        final id = resData["id"] as String;
-        final correct = resData["correct"] as bool;
+      for (Map<String, dynamic> resData in response.data[data]!) {
+        var { 
+          "id": String id, 
+          "correct": bool correct
+        } = resData;
         
         final i = results.indexWhere((r) => r.id == id);
         res[i] = res[i].copyWith(

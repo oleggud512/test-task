@@ -103,7 +103,7 @@ class _ProcessingPageState extends State<ProcessingPage> {
 
   Widget? buildSendButton(BuildContext context, ProcessingPageState state) {
     return Visibility.maintain(
-      visible: state.canSave,
+      visible: state.tasksLoaded,
       child: Padding(
         padding: const EdgeInsets.all(p16),
         child: FilledButton(
