@@ -7,7 +7,9 @@ import 'package:test_task/src/core/di/inject.dart';
 import 'package:test_task/src/features/shortest_path/presentation/processing/processing_page_bloc.dart';
 import 'package:test_task/src/features/shortest_path/presentation/processing/processing_page_event.dart';
 import 'package:test_task/src/features/shortest_path/presentation/processing/processing_page_state.dart';
+import 'package:test_task/src/features/shortest_path/presentation/processing/widgets/animated_loading.dart';
 import 'package:test_task/src/features/shortest_path/presentation/processing/widgets/error_message_dialog.dart';
+import 'package:test_task/src/features/shortest_path/presentation/processing/widgets/my_progress_indicator.dart';
 import 'package:test_task/src/features/shortest_path/presentation/result_list/result_list_page.dart';
 
 class ProcessingPage extends StatefulWidget {
@@ -86,47 +88,35 @@ class _ProcessingPageState extends State<ProcessingPage> {
         )
       );
     }
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(p16),
-            child: Text(state.isLoadingTasks
-              ? "loading".hardcoded
-              : "All calculations has finished. You can send your results to server.".hardcoded,
-              textAlign: TextAlign.center,
-            ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Offstage(
+          offstage: state.isLoadingTasks,
+          child: Text("All calculations has finished. You can send your results to server.".hardcoded,
+            textAlign: TextAlign.center, 
           ),
-          Text("30%",
-            style: Theme.of(context).textTheme.titleSmall,
-          ), // TODO: animate
-          h16gap,
-          SizedBox(
-            height: p104,
-            width: p104,
-            child: CircularProgressIndicator(
-              value: state.isLoadingTasks
-                ? null
-                : 1,
-            ),
-          )
-        ]
-      )
+        ),
+        h16gap,
+        if (state.isLoadingTasks) const AnimatedLoading()
+        else const MyProgeressIndicator(value: 1)
+      ]
     );
   }
 
   Widget? buildSendButton(BuildContext context, ProcessingPageState state) {
-    if (state.isLoadingTasks) return null;
-
-    return Padding(
-      padding: const EdgeInsets.all(p16),
-      child: FilledButton(
-        onPressed: state.isCheckingTasks
-          ? null
-          : () => onSubmitCalculations(context),
-        child: Text("Send results to server".hardcoded),
-      )
+    return Offstage(
+      offstage: state.isLoadingTasks,
+      child: Padding(
+        padding: const EdgeInsets.all(p16),
+        child: FilledButton(
+          onPressed: state.isCheckingTasks
+            ? null
+            : () => onSubmitCalculations(context),
+          child: Text("Send results to server".hardcoded),
+        )
+      ),
     );
   }
 }
