@@ -106,8 +106,10 @@ class _ProcessingPageState extends State<ProcessingPage> {
   }
 
   Widget? buildSendButton(BuildContext context, ProcessingPageState state) {
-    return Offstage(
-      offstage: state.isLoadingTasks,
+    return Opacity(
+      opacity: state.isLoadingTasks
+        ? 0
+        : 1,
       child: Padding(
         padding: const EdgeInsets.all(p16),
         child: FilledButton(

@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   final getUrlFuture = inject<GetUrlUseCase>()();
 
   final cont = TextEditingController();
-  var isValid = false;
+  bool? isValid;
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -32,15 +32,16 @@ class _HomePageState extends State<HomePage> {
         cont.text = url;
       }
     });
-    updateValidationState();
   }
 
   Future<void> onStart() async {
     await saveUrl(cont.text);
     if (mounted) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return const ProcessingPage();
-      }));
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) {
+          return const ProcessingPage();
+        }
+      ));
     }
   }
 
@@ -52,6 +53,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    if (isValid == null) {
+      Future(updateValidationState);
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text("Home Page".hardcoded),
@@ -81,7 +85,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(p16),
         child: FilledButton(
-          onPressed: isValid 
+          onPressed: isValid == true
             ? onStart 
             : null, 
           child: Text("Start counting process".hardcoded)
