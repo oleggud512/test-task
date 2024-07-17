@@ -46,13 +46,7 @@ class _ProcessingPageState extends State<ProcessingPage> {
     return BlocProvider(
       create: (_) => inject<ProcessingPageBloc>()
         ..add(ProcessingPageEvent.init()),
-      child: BlocConsumer<ProcessingPageBloc, ProcessingPageState>(
-        listenWhen: (prev, next) {
-          return prev.isCheckingTasks == false && next.isCheckingTasks == true;
-        },
-        listener: (context, state) {
-          // loadingDialog.show(context);
-        },
+      child: BlocBuilder<ProcessingPageBloc, ProcessingPageState>(
         builder: (context, state) {
           return Material(
             child: Stack(
