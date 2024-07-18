@@ -24,12 +24,12 @@ class BreadthFirstSearch<T> {
     final parents = <T, T>{};
 
     while (q.isNotEmpty) {
-      final node = q.removeLast();
+      final node = q.removeFirst();
       final neighbours = graph[node]!;
 
       for (final neighbour in neighbours) {
         if (!visited.contains(neighbour)) {
-          q.add(neighbour);
+          q.addLast(neighbour);
           visited.add(neighbour);
           parents[neighbour] = node;
         }
