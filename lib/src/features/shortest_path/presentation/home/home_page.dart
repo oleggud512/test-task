@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final urlRegExp = RegExp(r"http[s]?:\/\/.*\/flutter\/api[/]?");
+  // final urlRegExp = RegExp(r"http[s]?:\/\/.*\/flutter\/api[/]?");
 
   final saveUrl = inject<SaveUrlUseCase>();
   final getUrlFuture = inject<GetUrlUseCase>()();
@@ -46,6 +46,12 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  bool isValidUrl(String url) {
+    final uri = Uri.tryParse(url);
+    return uri != null && (uri.isScheme('http') || uri.isScheme('https'));
+  }
+
+
   void updateValidationState() {
     setState(() {
       isValid = formKey.currentState?.validate() ?? false;
@@ -74,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                 controller: cont,
                 validator: (url) {
                   if (url == null || url.isEmpty) return "Enter a url";
-                  if (urlRegExp.firstMatch(url) == null) return "Invalid url";
+                  if (!isValidUrl(url)) return "Invalid url";
                   return null;
                 },
                 autovalidateMode: AutovalidateMode.always,
