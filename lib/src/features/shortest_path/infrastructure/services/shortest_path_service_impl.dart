@@ -1,13 +1,14 @@
 import 'package:injectable/injectable.dart';
-import 'package:shortest_path/bredth_first_serach.dart';
+import 'package:shortest_path/breadth_first_serach.dart';
 import 'package:test_task/src/core/common/constants/strings.dart';
+import 'package:test_task/src/core/domain/exceptions.dart';
 import 'package:test_task/src/features/shortest_path/domain/entities/point.dart';
 import 'package:test_task/src/features/shortest_path/external/services/shortest_path.dart';
 
 @Singleton(as: ShortestPathService)
 class ShortestPathServiceImpl implements ShortestPathService {
-  @override
-  List<Point> findShortestPath(Point start, Point end, List<String> field) {
+
+  Map<Point, List<Point>> fieldToGraph(List<String> field) {
     final graph = <Point, List<Point>>{};
 
     final w = field[0].length;
@@ -38,7 +39,6 @@ class ShortestPathServiceImpl implements ShortestPathService {
 
           // check obstacles
           if (field[rr][cc] == fieldObstacle) continue;
-          // print("br");
 
           graph[point]!.add(Point(x: cc, y: rr));
         }
@@ -46,7 +46,19 @@ class ShortestPathServiceImpl implements ShortestPathService {
     }
     // print("w=$w h=$h ${graph}");
 
-    final bfs = BredthFirstSearch<Point>(start, end, graph);
+    return graph;
+  }
+
+  @override
+  List<Point> findShortestPath(Point start, Point end, List<String> field) {
+    if (field.isEmpty || field[0].isEmpty) {
+      throw AppException("Field is too small");
+    }
+    if (field.length >= 100 || field[0].length >= 100) {
+      throw AppException("Field is too big");
+    }
+    final graph = fieldToGraph(field);
+    final bfs = BreadthFirstSearch<Point>(start, end, graph);
     return bfs.getShortestPath();
   }
 

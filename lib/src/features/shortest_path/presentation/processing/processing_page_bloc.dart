@@ -45,13 +45,27 @@ class ProcessingPageBloc extends Bloc<ProcessingPageEvent, ProcessingPageState> 
           isLoadingTasks: false
         ));
       },
-      (right) {
+      (tasks) {
+        final results = <Result>[];
+        for (final task in tasks) {
+          final shortestPath = getShortestPath(task.start, task.end, task.field);
+          if (shortestPath.isLeft) {
+            emit(state.copyWith(
+              errorMessage: shortestPath.left.message,
+              isLoadingTasks: false
+            ));
+            break;
+          }
+          if (shortestPath.isRight) {
+            results.add(Result(
+              id: task.id,
+              steps: shortestPath.right
+            ));
+          }
+        }
         emit(state.copyWith(
-          tasks: right,
-          results: right.map((task) => Result(
-            id: task.id,
-            steps: getShortestPath(task.start, task.end, task.field)
-          )).toList(),
+          tasks: tasks,
+          results: results,
           isLoadingTasks: false
         ));
       }

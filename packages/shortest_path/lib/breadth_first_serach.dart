@@ -1,33 +1,17 @@
 import 'dart:collection';
 
-class BredthFirstSearch<T> {
+class BreadthFirstSearch<T> {
   final Map<T, List<T>> graph;
   final T start;
   final T end;
 
-  const BredthFirstSearch(this.start, this.end, this.graph);
+  const BreadthFirstSearch(this.start, this.end, this.graph);
 
   // returns { node: parent }
   List<T> getShortestPath() {
     final parents = getAllParents();
     final path = findPath(parents);
     return path;
-  }
-
-  List<T> findPath(Map<T, T> parents) {
-    final path = <T>[];
-
-    T? node = end;
-
-    while (node != null) {
-      path.insert(0, node);
-      node = parents[node];
-    }
-
-    if (path.isNotEmpty) {
-      return path;
-    }
-    return [];
   }
 
   Map<T, T> getAllParents() {
@@ -53,5 +37,21 @@ class BredthFirstSearch<T> {
     }
 
     return parents;
+  }
+
+  List<T> findPath(Map<T, T> parents) {
+    final path = <T>[];
+
+    T? node = end;
+
+    while (node != null) {
+      path.insert(0, node);
+      node = parents[node];
+    }
+
+    if (path.isNotEmpty) {
+      return path;
+    }
+    return [];
   }
 }
