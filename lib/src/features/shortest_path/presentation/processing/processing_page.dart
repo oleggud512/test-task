@@ -69,22 +69,11 @@ class _ProcessingPageState extends State<ProcessingPage> {
   }
   
   Widget buildBody(BuildContext context, ProcessingPageState state) {
+    Widget body;
     if (state.errorMessage != null) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(state.errorMessage!),
-            h8gap,
-            FilledButton(
-              onPressed: () => onRetry(context),
-              child: Text("Retry".hardcoded),
-            )
-          ]
-        ),
-      );
+      body = buildGetTasksError(context, state);
     }
-    return Column(
+    body = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -98,6 +87,26 @@ class _ProcessingPageState extends State<ProcessingPage> {
         if (state.isLoadingTasks) const AnimatedLoading()
         else const MyProgeressIndicator(value: 1)
       ]
+    );
+    return Padding(
+      padding: const EdgeInsets.all(p16),
+      child: body
+    );
+  }
+
+  Widget buildGetTasksError(BuildContext context, ProcessingPageState state) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(state.errorMessage!),
+          h8gap,
+          FilledButton(
+            onPressed: () => onRetry(context),
+            child: Text("Retry".hardcoded),
+          )
+        ]
+      ),
     );
   }
 
