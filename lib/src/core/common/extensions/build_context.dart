@@ -63,17 +63,7 @@ extension BuildContextEntension<T> on BuildContext {
 
   Color get errorColor => Theme.of(this).colorScheme.error;
 
-  Color get background => Theme.of(this).colorScheme.background;
-
-  // custome theme extensions, You must have to create theme extensions first
-  // you can use them with shortcuts as well
-  // Gradient get vertical => Theme.of(this).extension<AppThemeExtension>()!.vertical;
-
-  // Gradient get horizontal => Theme.of(this).extension<AppThemeExtension>()!.horizontal;
-
-  // Color get extraLightGrey => Theme.of(this).extension<AppThemeExtension>()!.extraLightGrey;
-
-  // Color get lightGrey => Theme.of(this).extension<AppThemeExtension>()!.lightGrey;
+  Color get surface => Theme.of(this).colorScheme.surface;
 
   Future<T?> showBottomSheet(
     Widget child, {

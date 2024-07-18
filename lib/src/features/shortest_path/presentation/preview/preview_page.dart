@@ -22,42 +22,55 @@ class PreviewPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Preview Page".hardcoded), 
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(p16),
-        child: Column(
-          children: [
-            Table(
-              border: TableBorder.all(color: Colors.black, width: 1),
-              children: List.generate(task.field.length, (ri) {
-                return TableRow(
-                  children: List.generate(task.field[0].length, (ci) {
-                    final color = getColor(ri, ci);
-                    return TableCell(
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: Container(
-                          alignment: Alignment.center,
-                          color: color,
-                          child: Text("($ci,$ri)",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: color.computeLuminance() > 0.5
-                                ? Colors.black
-                                : Colors.white
-                            )
-                          ),
-                        ),
-                      )
-                    );
-                  })
-                );
-              })
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(p16),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: p504 
+              ),
+              child: Column(
+                children: [
+                  buildField(),
+                  h16gap,
+                  Text(result.path)
+                ]
+              ),
             ),
-            h16gap,
-            Text(result.path)
-          ]
+          ),
         ),
       )
+    );
+  }
+
+  Table buildField() {
+    return Table(
+      border: TableBorder.all(color: Colors.black, width: 1),
+      children: List.generate(task.field.length, (ri) {
+        return TableRow(
+          children: List.generate(task.field[0].length, (ci) {
+            final color = getColor(ri, ci);
+            return TableCell(
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Container(
+                  alignment: Alignment.center,
+                  color: color,
+                  child: Text("($ci,$ri)",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: color.computeLuminance() > 0.5
+                        ? Colors.black
+                        : Colors.white
+                    )
+                  ),
+                ),
+              )
+            );
+          })
+        );
+      })
     );
   }
 

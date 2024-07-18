@@ -57,6 +57,7 @@ const double p424 = 424.0;
 const double p432 = 432.0;
 const double p440 = 440.0;
 const double p448 = 448.0;
+const double p504 = 504.0;
 
 const shrink = SizedBox.shrink();
 
